@@ -12,6 +12,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -24,15 +25,16 @@ jobs:
       - name: Install Build Tools
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install build cloudsmith-cli
+          pip3 install build
 
       - name: Build Package
         run: python -m build
 
+      - name: Authenticate with Cloudsmith using OIDC
         uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
         with:
-            oidc-namespace: 'workspace-for-rajdeep'
-            oidc-service-slug: 'bot-wSY1'
+          oidc-namespace: 'workspace-for-rajdeep'
+          oidc-service-slug: 'bot-wSY1'
 
       - name: Push Package to Cloudsmith
         run: |
