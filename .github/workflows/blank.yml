@@ -1,0 +1,35 @@
+name: Pull Python Package via Cloudsmith Upstream
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  workflow_dispatch:
+
+jobs:
+  install-from-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Authenticate with Cloudsmith using OIDC
+        uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
+        with:
+          oidc-namespace: 'workspace-for-rajdeep'
+          oidc-service-slug: 'bot-wSY1'
+
+      - name: Install dependency from Cloudsmith upstream
+        run: |
+          pip install --upgrade pip
+          pip install --index-url https://dl.cloudsmith.io/public/workspace-for-rajdeep/productdemo/python/simple/ requests
+
+      - name: Verify Installation
+        run: python -c "import requests; print('requests version:', requests.__version__)"
