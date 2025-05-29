@@ -29,7 +29,7 @@ jobs:
       - name: Install dependency from Cloudsmith upstream
         run: |
           pip install --upgrade pip
-          pip install --index-url https://dl.cloudsmith.io/public/workspace-for-rajdeep/productdemo/python/simple/ requests
+          pip install --index-url https://dl.cloudsmith.io/workspace-for-rajdeep/productdemo/python/simple/ requests
 
       - name: Verify Installation
         run: python -c "import requests; print('requests version:', requests.__version__)"
