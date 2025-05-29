@@ -1,0 +1,40 @@
+name: Publish Python Package to Cloudsmith via OIDC
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Build Tools
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install build cloudsmith-cli
+
+      - name: Build Package
+        run: python -m build
+
+        uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
+        with:
+            oidc-namespace: 'workspace-for-rajdeep'
+            oidc-service-slug: 'bot-wSY1'
+
+      - name: Push Package to Cloudsmith
+        run: |
+          echo "Pushing all .tar.gz packages to Cloudsmith..."
+          cloudsmith push python workspace-for-rajdeep/productdemo dist/*.tar.gz
