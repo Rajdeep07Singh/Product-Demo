@@ -26,10 +26,11 @@ jobs:
           oidc-namespace: 'workspace-for-rajdeep'
           oidc-service-slug: 'bot-wSY1'
 
-      - name: Install dependency from Cloudsmith upstream
+      - name: Test upstream proxy with Cloudsmith
         run: |
           pip install --upgrade pip
-          pip install --index-url https://dl.cloudsmith.io/workspace-for-rajdeep/productdemo/python/simple/ requests
+          pip install --index-url https://dl.cloudsmith.io/workspace-for-rajdeep/productdemo/python/simple/ six
+
 
       - name: Verify Installation
         run: python -c "import requests; print('requests version:', requests.__version__)"
