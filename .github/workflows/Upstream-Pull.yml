@@ -26,17 +26,10 @@ jobs:
           oidc-namespace: 'workspace-for-rajdeep'
           oidc-service-slug: 'bot-wSY1'
 
-      - name: Configure pip to use Cloudsmith repository with authentication
-        run: |
-          mkdir -p ~/.config/pip
-          echo "[global]" > ~/.config/pip/pip.conf
-          echo "extra-index-url = https://dl.cloudsmith.io/workspace-for-rajdeep/productdemo/python/simple/" >> ~/.config/pip/pip.conf
-          echo "trusted-host = dl.cloudsmith.io" >> ~/.config/pip/pip.conf
-
-      - name: Upgrade pip and install six package
+      - name: Upgrade pip and install six package from Cloudsmith upstream
         run: |
           pip install --upgrade pip
-          pip install six==1.16.0
+          pip install six==1.16.0 --index-url https://dl.cloudsmith.io/fMtQpz0mbkthSVhM/workspace-for-rajdeep/productdemo/python/simple/
 
       - name: Verify Installation
         run: python -c "import six; print('six version:', six.__version__)"
