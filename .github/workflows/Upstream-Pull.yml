@@ -26,9 +26,6 @@ jobs:
           oidc-namespace: 'workspace-for-rajdeep'
           oidc-service-slug: 'bot-wSY1'
 
-      - name: Login to Cloudsmith CLI
-        run: cloudsmith login --oidc
-
       - name: Configure pip to use Cloudsmith repository with authentication
         run: |
           mkdir -p ~/.config/pip
